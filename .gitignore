@@ -1,0 +1,38 @@
+# Build
+/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+*.classpath
+*.project
+*.settings/
+
+# Maven
+log/
+*.log
+.mvn/wrapper/maven-wrapper.jar
+
+# mvnw files (si no vas a usar Maven Wrapper, también podés ignorarlos)
+/mvnw
+/mvnw.cmd
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Docker
+*.env
+docker-compose.override.yml
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Other
+*.swp
+*.swo
