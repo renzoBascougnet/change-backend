@@ -1,0 +1,244 @@
+# API de Cálculo y Registro de Historial
+
+## Descripción
+
+Servicio REST que permite realizar cálculos aplicando un porcentaje dinámico obtenido de un servicio externo (mockeado), almacenar en caché este porcentaje, y registrar el historial de llamadas realizadas a la API en una base de datos PostgreSQL.
+
+## Tecnologías utilizadas
+* Java 21
+* Spring Boot 
+* PostgreSQL (en Docker) 
+* Docker / Docker Compose 
+* Postman (para pruebas de endpoints) 
+* Swagger (para documentación de la API)
+* JUnit 5 y Mockito (para tests unitarios)
+
+---
+
+## Requisitos previos
+* Docker
+* Docker Compose
+* Java 21 (si se quiere correr sin contenedor)
+
+---
+
+## Instalación y ejecución
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/renzoBascougnet/change-backend.git
+cd change-backend 
+```
+
+### 2. Levantar los servicios con Docker Compose
+
+   Desde la raíz del proyecto, ejecutar:
+
+```bash
+docker-compose up --build
+```
+Esto hará que Docker:
+* Construya la imagen de la API.
+* Descargue y levante una instancia de PostgreSQL.
+* Ejecute ambos servicios en contenedores separados.
+
+---
+
+### Acceso a los servicios
+
+* API disponible en: http://localhost:8080
+* Swagger UI en: http://localhost:8080/swagger-ui/index.html
+* Base de datos PostgreSQL:
+  * Host: localhost
+  * Puerto: 5432
+  * Base de datos: challenge
+  * Usuario: postgres
+  * Contraseña: postgres
+
+---
+
+## Endpoints disponibles
+
+### 1. /api/calculation
+
+* Método: GET
+* Descripción: Realiza un cálculo de suma entre dos números (num1, num2) y le aplica un porcentaje.
+* Funcionamiento:
+  * Suma num1 + num2.
+  * Obtiene el porcentaje de un servicio externo (mock fijo).
+  * Si el servicio falla, utiliza el valor cacheado (durante 30 minutos).
+  * Si no hay valor cacheado, retorna error 404.
+  * El cálculo final es:<br>
+    **resultado = (num1 + num2) × (1 + (porcentaje / 100))**
+* Parámetros:
+  * `num1` (Double) - Primer número<br>
+  * `num2` (Double) - Segundo número<br>
+* Ejemplo de request:
+```
+GET /api/calculation?num1=10&num2=20
+```
+* Ejemplo de respuesta (porcentaje 20%):
+```
+36.0
+```
+(Ya que (10 + 20) × 1.2 = 36.0)
+* Ejemplo de respuesta en caso de error:
+```
+{
+  "status": 404,
+  "message": "No se pudo obtener el porcentaje ni hay valor cacheado.",
+  "timestamp": 1745762068966
+}
+```
+
+### 2. /api/request-history
+* Método: GET
+* Descripción: Obtiene el historial de llamadas realizadas a la API.
+* Parámetros:
+  * `page` (Integer) - Número de página
+  * `size` (Integer) - Cantidad de elementos por página
+* Ejemplo de request:
+```
+GET /api/request-history?page=0&size=10
+```
+* Ejemplo de respuesta:
+```json
+{
+  "content": [
+    {
+      "id": 126,
+      "timestamp": "2025-04-27T14:26:21.087071",
+      "endpoint": "/api/request-history",
+      "parameters": "page=0&size=5",
+      "response": "{\"content\":[{\"id\":125,\"timestamp\":\"2025-04-27T14:26:14.545999\",\"endpoint\":\"/api/calculation\",\"parameters\":\"num1=23&num2=12\",\"response\":\"{\\\"status\\\":404,\\\"message\\\":\\\"No se pudo obtener el porcentaje ni hay valor cacheado\\\",\\\"timestamp\\\":1745763974539}\",\"error\":true},{\"id\":124,\"timestamp\":\"2025-04-27T14:23:50.089944\",\"endpoint\":\"/api/calculation\",\"parameters\":\"num1=23&num2=12\",\"response\":\"42.0\",\"error\":false},{\"id\":123,\"timestamp\":\"2025-04-27T14:23:42.440863\",\"endpoint\":\"/api/calculation\",\"parameters\":\"num1=23&num2=12\",\"response\":\"42.0\",\"error\":false},{\"id\":122,\"timestamp\":\"2025-04-27T14:23:16.08002\",\"endpoint\":\"/api/calculation\",\"parameters\":\"num1=23&num2=12\",\"response\":\"42.0\",\"error\":false},{\"id\":121,\"timestamp\":\"2025-04-27T14:23:12.512431\",\"endpoint\":\"/api/calculation\",\"parameters\":\"num1=23&num2=12\",\"response\":\"42.0\",\"error\":false}],\"pageable\":{\"pageNumber\":0,\"pageSize\":5,\"sort\":[{\"direction\":\"DESC\",\"property\":\"timestamp\",\"ignoreCase\":false,\"nullHandling\":\"NATIVE\",\"descending\":true,\"ascending\":false}],\"offset\":0,\"paged\":true,\"unpaged\":false},\"totalPages\":25,\"totalElements\":125,\"last\":false,\"numberOfElements\":5,\"first\":true,\"size\":5,\"number\":0,\"sort\":[{\"direction\":\"DESC\",\"property\":\"timestamp\",\"ignoreCase\":false,\"nullHandling\":\"NATIVE\",\"descending\":true,\"ascending\":false}],\"empty\":false}",
+      "error": false
+    },
+    {
+      "id": 125,
+      "timestamp": "2025-04-27T14:26:14.545999",
+      "endpoint": "/api/calculation",
+      "parameters": "num1=23&num2=12",
+      "response": "{\"status\":404,\"message\":\"No se pudo obtener el porcentaje ni hay valor cacheado\",\"timestamp\":1745763974539}",
+      "error": true
+    },
+    {
+      "id": 124,
+      "timestamp": "2025-04-27T14:23:50.089944",
+      "endpoint": "/api/calculation",
+      "parameters": "num1=23&num2=12",
+      "response": "42.0",
+      "error": false
+    },
+    {
+      "id": 123,
+      "timestamp": "2025-04-27T14:23:42.440863",
+      "endpoint": "/api/calculation",
+      "parameters": "num1=23&num2=12",
+      "response": "42.0",
+      "error": false
+    },
+    {
+      "id": 122,
+      "timestamp": "2025-04-27T14:23:16.08002",
+      "endpoint": "/api/calculation",
+      "parameters": "num1=23&num2=12",
+      "response": "42.0",
+      "error": false
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 5,
+    "sort": [
+      {
+        "direction": "DESC",
+        "property": "timestamp",
+        "ignoreCase": false,
+        "nullHandling": "NATIVE",
+        "descending": true,
+        "ascending": false
+      }
+    ],
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalPages": 26,
+  "totalElements": 126,
+  "last": false,
+  "numberOfElements": 5,
+  "first": true,
+  "size": 5,
+  "number": 0,
+  "sort": [
+    {
+      "direction": "DESC",
+      "property": "timestamp",
+      "ignoreCase": false,
+      "nullHandling": "NATIVE",
+      "descending": true,
+      "ascending": false
+    }
+  ],
+  "empty": false
+}
+```
+* Ejemplo de respuesta en caso de error al consultar historial:
+```
+{
+  "status": 500,
+  "message": "Se produjo un error inesperado.",
+  "timestamp": 1745762068966
+}
+```
+
+---
+
+## Documentación de la API
+* Swagger UI: http://localhost:8080/swagger-ui/index.html
+* Colección Postman: Incluida en el proyecto (postman_collection.json) para pruebas manuales.
+
+---
+
+## Tests
+El proyecto cuenta con una cobertura de tests unitarios desarrollados con JUnit 5 y Mockito, abarcando los principales componentes y flujos de la aplicación.
+
+### Áreas testeadas:
+#### 1. Servicio de Cálculo (CalculationService)
+   * Cálculo correcto de suma + porcentaje.
+   * Manejo del porcentaje proveniente de caché.
+   * Manejo de errores cuando falla el servicio externo y no hay cache disponible.
+
+#### 2. Módulo de Caché (PercentageCache)
+   * Almacenamiento exitoso del porcentaje.
+   * Expiración automática del valor en 30 minutos.
+   * Recuperación del porcentaje cacheado ante caídas del servicio externo.
+
+#### 3. Registro de Historial (RequestHistoryService)
+   * Registro correcto de las solicitudes en la base de datos.
+   * Registro asíncrono para no afectar la performance de las respuestas.
+   * Validación de la persistencia de la información consultada.
+
+### Herramientas adicionales:
+* Mockito para simular dependencias externas y escenarios de error. 
+* Testcontainers (opcional): se podría integrar para tests de integración reales contra PostgreSQL si se quisiera escalar la cobertura.
+
+---
+
+## Docker
+* Dockerfile: Para construir la imagen de la API.
+* docker-compose.yml: Para levantar conjuntamente:
+  * API en localhost:8080
+  * PostgreSQL en localhost:5432
+* Se puede reconstruir el proyecto ante cambios usando:
+```bash
+docker-compose up --build
+```
+
+---
+
+## Consideraciones adicionales
+* El servicio de porcentaje es mockeado, simulando posibles fallas para probar cacheo y resiliencia.
+* Se manejan los errores de manera adecuada usando @ExceptionHandler y retornando códigos HTTP correctos.
+* Arquitectura del proyecto respetando capas (Controller, Service, Repository).
+* Código siguiendo buenas prácticas: nombres descriptivos, separación clara de responsabilidades, principios SOLID.
