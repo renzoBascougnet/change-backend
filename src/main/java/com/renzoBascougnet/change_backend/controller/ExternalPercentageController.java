@@ -21,6 +21,11 @@ public class ExternalPercentageController {
             throw new RuntimeException("Error simulado en el intento " + count);
         }
 
+        if (count == 4) {
+            log.error("Simulando null");
+            return ResponseEntity.ok(null);
+        }
+
         return ResponseEntity.ok(20.0);
     }
 }

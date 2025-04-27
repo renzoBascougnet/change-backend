@@ -1,6 +1,7 @@
 package com.renzoBascougnet.change_backend.service.impl;
 
 import com.renzoBascougnet.change_backend.client.PercentageClient;
+import com.renzoBascougnet.change_backend.exception.PercentageNotFoundException;
 import com.renzoBascougnet.change_backend.service.PercentageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,7 @@ public class PercentageServiceImpl implements PercentageService {
                     return cachedPercentage;
                 }
             }
-            throw new RuntimeException("No se pudo obtener el porcentaje ni hay valor cacheado");
+            throw new PercentageNotFoundException("No se pudo obtener el porcentaje ni hay valor cacheado");
         }
     }
 }
