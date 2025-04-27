@@ -39,7 +39,7 @@ public class PercentageServiceImpl implements PercentageService {
                     return cachedPercentage;
                 }
             }
-            throw new PercentageNotFoundException("No se pudo obtener el porcentaje ni hay valor cacheado");
+            throw new PercentageNotFoundException("No se pudo obtener el porcentaje ni hay valor cacheado.");
         }
     }
 }

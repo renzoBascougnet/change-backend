@@ -33,7 +33,9 @@ public class LoggingFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, wrappedResponse);
         } catch (Exception e) {
-            logRequest(endpoint, parameters, e.getMessage(), true);
+            if(!"/external/percentage".equals(endpoint)){
+                logRequest(endpoint, parameters, e.getMessage(), true);
+            }
         }
 
         String responseBody = new String(wrappedResponse.getContentAsByteArray(), wrappedResponse.getCharacterEncoding());
@@ -43,7 +45,9 @@ public class LoggingFilter extends OncePerRequestFilter {
         HttpStatus status = HttpStatus.valueOf(wrappedResponse.getStatus());
         boolean isError = !status.is2xxSuccessful();
 
-        logRequest(endpoint, parameters, responseBody, isError);
+        if(!"/external/percentage".equals(endpoint)) {
+            logRequest(endpoint, parameters, responseBody, isError);
+        }
 
         wrappedResponse.copyBodyToResponse();
     }

@@ -1,6 +1,9 @@
 package com.renzoBascougnet.change_backend.controller;
 
 import com.renzoBascougnet.change_backend.service.CalculationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/calculation")
 @RequiredArgsConstructor
+@Tag(name = "Calculations", description = "Operaciones para realizar cálculos.")
 public class CalculationController {
 
     private final CalculationService calculationService;
 
     @PostMapping
-    public ResponseEntity<?> calculate(@RequestParam double num1, @RequestParam double num2){
+    @Operation(summary = "Calcular porcentaje", description = "Realiza un cálculo de suma entre dos números (num1, num2) y le aplica un porcentaje.")
+    public ResponseEntity<?> calculate(
+            @Parameter(description = "Primer número para el cálculo", example = "100") @RequestParam double num1,
+            @Parameter(description = "Segundo número para el cálculo", example = "100") @RequestParam double num2){
         double result = calculationService.calculateWithPercentage(num1, num2);
         return ResponseEntity.ok(result);
     }
