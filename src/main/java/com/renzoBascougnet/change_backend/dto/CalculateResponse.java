@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @Builder
 public class CalculateResponse {
-    private Double result;
+    private double result;
 }

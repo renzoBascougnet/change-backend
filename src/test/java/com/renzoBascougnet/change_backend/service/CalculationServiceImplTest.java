@@ -23,14 +23,12 @@ public class CalculationServiceImplTest {
     void testCalculateWithPercentageFromService() {
         double num1 = 100;
         double num2 = 200;
-        double percentage = 10; // 10%
+        double percentage = 10;
 
         when(percentageService.getPercentage()).thenReturn(percentage);
 
         double result = calculationService.calculateWithPercentage(num1, num2);
 
-        // sum = 100 + 200 = 300
-        // 300 + (300 * 10%) = 330
         assertEquals(330, result, 0.001);
         verify(percentageService).getPercentage();
     }

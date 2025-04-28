@@ -23,9 +23,9 @@ public class ExternalPercentageController {
 
         if (count == 4) {
             log.error("Simulando null");
-            return ResponseEntity.ok(null);
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(20.0);
+        return ResponseEntity.ok(10.0);
     }
 }
