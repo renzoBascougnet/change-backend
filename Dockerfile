@@ -1,16 +1,16 @@
-# Etapa de build
 FROM eclipse-temurin:21 AS build
 
-# Instalamos Maven manualmente
 RUN apt-get update && apt-get install -y maven
 
 WORKDIR /app
-COPY . .
+COPY pom.xml .
 
-# Compilamos el proyecto sin ejecutar tests
-RUN mvn clean package -DskipTests
+RUN mvn dependency:go-offline
 
-# Etapa final
+COPY src ./src
+
+RUN mvn clean package
+
 FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
