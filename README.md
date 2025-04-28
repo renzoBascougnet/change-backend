@@ -106,7 +106,6 @@ GET /api/request-history?page=0&size=10
 {
   "content": [
     {
-      "id": 126,
       "timestamp": "2025-04-27T14:26:21.087071",
       "endpoint": "/api/request-history",
       "parameters": "page=0&size=5",
@@ -114,7 +113,6 @@ GET /api/request-history?page=0&size=10
       "error": false
     },
     {
-      "id": 125,
       "timestamp": "2025-04-27T14:26:14.545999",
       "endpoint": "/api/calculation",
       "parameters": "num1=23&num2=12",
@@ -122,7 +120,6 @@ GET /api/request-history?page=0&size=10
       "error": true
     },
     {
-      "id": 124,
       "timestamp": "2025-04-27T14:23:50.089944",
       "endpoint": "/api/calculation",
       "parameters": "num1=23&num2=12",
@@ -130,7 +127,6 @@ GET /api/request-history?page=0&size=10
       "error": false
     },
     {
-      "id": 123,
       "timestamp": "2025-04-27T14:23:42.440863",
       "endpoint": "/api/calculation",
       "parameters": "num1=23&num2=12",
@@ -138,7 +134,6 @@ GET /api/request-history?page=0&size=10
       "error": false
     },
     {
-      "id": 122,
       "timestamp": "2025-04-27T14:23:16.08002",
       "endpoint": "/api/calculation",
       "parameters": "num1=23&num2=12",

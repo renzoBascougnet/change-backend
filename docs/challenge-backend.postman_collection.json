@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "7a5e7a49-ec01-4179-a8c1-a7582894ddbe",
+		"name": "challenge-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20747929",
+		"_collection_link": "https://asdf33-2041.postman.co/workspace/change-backend~efd558a0-40c4-4e87-8c23-6fd6864cf47b/collection/20747929-7a5e7a49-ec01-4179-a8c1-a7582894ddbe?action=share&source=collection_link&creator=20747929"
+	},
+	"item": [
+		{
+			"name": "Calculation",
+			"item": [
+				{
+					"name": "Calculate sum and apply percentage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/calculation?num1=10&num2=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"calculation"
+							],
+							"query": [
+								{
+									"key": "num1",
+									"value": "10"
+								},
+								{
+									"key": "num2",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Recibe dos números, los suma y aplica un porcentaje adicional."
+					},
+					"response": [
+						{
+							"name": "Success Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/calculation?num1=10&num2=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"calculation"
+									],
+									"query": [
+										{
+											"key": "num1",
+											"value": "10"
+										},
+										{
+											"key": "num2",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"result\": 16.5}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Request History",
+			"item": [
+				{
+					"name": "Get request history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/request-history?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"request-history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Devuelve el historial de llamadas realizadas a la API, con paginación."
+					},
+					"response": [
+						{
+							"name": "Success Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/request-history?page=0&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"request-history"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"content\": [{\"id\": 1, \"endpoint\": \"/api/calculation\", \"parameters\": \"num1=10&num2=5\", \"response\": \"16.5\", \"timestamp\": \"2024-04-27T18:00:00\"}]}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
