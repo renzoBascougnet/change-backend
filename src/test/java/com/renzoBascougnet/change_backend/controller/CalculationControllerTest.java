@@ -1,5 +1,6 @@
 package com.renzoBascougnet.change_backend.controller;
 
+import com.renzoBascougnet.change_backend.dto.CalculateResponse;
 import com.renzoBascougnet.change_backend.service.CalculationService;
 import com.renzoBascougnet.change_backend.service.RequestLogService;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,10 @@ public class CalculationControllerTest {
         double num1 = 100;
         double num2 = 200;
         double expectedResult = 345.0;
+        CalculateResponse calculateResponse = CalculateResponse.builder().result(expectedResult).build();
 
         Mockito.when(calculationService.calculateWithPercentage(num1, num2))
-                .thenReturn(expectedResult);
+                .thenReturn(calculateResponse);
 
         mockMvc.perform(get("/api/calculation")
                         .param("num1", String.valueOf(num1))

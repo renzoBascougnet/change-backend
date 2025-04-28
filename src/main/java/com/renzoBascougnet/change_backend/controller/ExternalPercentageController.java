@@ -1,31 +1,30 @@
 package com.renzoBascougnet.change_backend.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import com.renzoBascougnet.change_backend.service.MockExternalPercentageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Slf4j
+@RequestMapping("/external")
+@RequiredArgsConstructor
+@Tag(name = "External", description = "Servicios externos relacionados con el cálculo de porcentajes")
 public class ExternalPercentageController {
-    private int count = 0;
-    @GetMapping("/external/percentage")
+
+    private final MockExternalPercentageService mockExternalPercentageService;
+
+    @GetMapping("/percentage")
+    @Operation(summary = "Obtener porcentaje externo",
+            description = "Este endpoint recupera un porcentaje desde un servicio externo simulado. En caso de no encontrar el porcentaje, retorna un estado 204 No Content. Si hay un error o no se puede obtener el porcentaje, el servicio puede retornar una respuesta vacía.")
     public ResponseEntity<Double> getPercentage() {
-        count++;
-
-        log.info("/external/percentage");
-        log.info("count: " + count);
-
-        if (count == 3 || count == 6 || count == 9) {
-            log.error("Simulando error en intento " + count);
-            throw new RuntimeException("Error simulado en el intento " + count);
-        }
-
-        if (count == 4) {
-            log.error("Simulando null");
+        Double percentage = mockExternalPercentageService.getPercentage();
+        if (percentage == null) {
             return ResponseEntity.noContent().build();
         }
-
-        return ResponseEntity.ok(10.0);
+        return ResponseEntity.ok(percentage);
     }
 }

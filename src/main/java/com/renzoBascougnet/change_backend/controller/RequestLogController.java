@@ -1,5 +1,6 @@
 package com.renzoBascougnet.change_backend.controller;
 
+import com.renzoBascougnet.change_backend.dto.RequestLogResponse;
 import com.renzoBascougnet.change_backend.entity.RequestLog;
 import com.renzoBascougnet.change_backend.service.RequestLogService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,10 +24,9 @@ public class RequestLogController {
 
     @GetMapping
     @Operation(summary = "Obtener historial de requests", description = "Devuelve un historial paginado de todas las solicitudes realizadas")
-    public ResponseEntity<Page<RequestLog>> getRequestHistory(
-            @Parameter(description = "Número de página", example = "0") @RequestParam int page,
-            @Parameter(description = "Tamaño de página", example = "5") @RequestParam int size) {
-        Page<RequestLog> requestLogs = requestLogService.findAll(page, size);
-        return ResponseEntity.ok(requestLogs);
+    public ResponseEntity<Page<RequestLogResponse>> getRequestHistory(
+            @Parameter(description = "Número de página", example = "0") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Tamaño de página", example = "5") @RequestParam(defaultValue = "5") int size) {
+        return ResponseEntity.ok(requestLogService.findAll(page, size));
     }
 }

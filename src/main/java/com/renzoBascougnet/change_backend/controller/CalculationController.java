@@ -23,10 +23,8 @@ public class CalculationController {
     @GetMapping
     @Operation(summary = "Calcular porcentaje", description = "Realiza un cálculo de suma entre dos números (num1, num2) y le aplica un porcentaje.")
     public ResponseEntity<CalculateResponse> calculate(
-            @Parameter(description = "Primer número para el cálculo", example = "100") @RequestParam double num1,
-            @Parameter(description = "Segundo número para el cálculo", example = "100") @RequestParam double num2){
-        double result = calculationService.calculateWithPercentage(num1, num2);
-        CalculateResponse response = CalculateResponse.builder().result(result).build();
-        return ResponseEntity.ok(response);
+            @Parameter(description = "Primer número para el cálculo", example = "10") @RequestParam double num1,
+            @Parameter(description = "Segundo número para el cálculo", example = "30") @RequestParam double num2){
+        return ResponseEntity.ok(calculationService.calculateWithPercentage(num1, num2));
     }
 }

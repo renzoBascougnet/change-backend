@@ -1,10 +1,10 @@
 package com.renzoBascougnet.change_backend.service.impl;
 
+import com.renzoBascougnet.change_backend.dto.RequestLogResponse;
 import com.renzoBascougnet.change_backend.entity.RequestLog;
 import com.renzoBascougnet.change_backend.repository.RequestLogRepository;
 import com.renzoBascougnet.change_backend.service.RequestLogService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class RequestLogServiceImpl implements RequestLogService {
 
     private final RequestLogRepository requestLogRepository;
@@ -22,12 +21,20 @@ public class RequestLogServiceImpl implements RequestLogService {
     @Override
     @Async
     public void saveRequestLog(RequestLog requestLog){
-        log.info(requestLogRepository.save(requestLog).toString());
+        requestLogRepository.save(requestLog);
     }
 
     @Override
-    public Page<RequestLog> findAll(int page, int size) {
+    public Page<RequestLogResponse> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("timestamp")));
-        return requestLogRepository.findAll(pageable);
+        Page<RequestLog> requestLogs = requestLogRepository.findAll(pageable);
+
+        return requestLogs.map(requestLog -> RequestLogResponse.builder()
+                .timestamp(requestLog.getTimestamp())
+                .endpoint(requestLog.getEndpoint())
+                .parameters(requestLog.getParameters())
+                .response(requestLog.getResponse())
+                .error(requestLog.isError())
+                .build());
     }
 }

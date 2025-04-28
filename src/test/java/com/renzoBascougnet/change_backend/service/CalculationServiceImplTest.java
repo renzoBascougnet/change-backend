@@ -3,6 +3,7 @@ package com.renzoBascougnet.change_backend.service;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.renzoBascougnet.change_backend.dto.CalculateResponse;
 import com.renzoBascougnet.change_backend.service.impl.CalculationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +28,9 @@ public class CalculationServiceImplTest {
 
         when(percentageService.getPercentage()).thenReturn(percentage);
 
-        double result = calculationService.calculateWithPercentage(num1, num2);
+        CalculateResponse result = calculationService.calculateWithPercentage(num1, num2);
 
-        assertEquals(330, result, 0.001);
+        assertEquals(330, result.getResult(), 0.001);
         verify(percentageService).getPercentage();
     }
 }

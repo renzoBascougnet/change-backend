@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.Instant;
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -17,7 +19,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .message(e.getMessage())
-                .timestamp(System.currentTimeMillis())
+                .timestamp(Instant.now().toEpochMilli())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -28,9 +30,8 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .message("Se produjo un error inesperado.")
-                .timestamp(System.currentTimeMillis())
+                .timestamp(Instant.now().toEpochMilli())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

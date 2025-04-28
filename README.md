@@ -214,14 +214,8 @@ El proyecto cuenta con una cobertura de tests unitarios desarrollados con JUnit 
    * Expiración automática del valor en 30 minutos.
    * Recuperación del porcentaje cacheado ante caídas del servicio externo.
 
-#### 3. Registro de Historial (RequestHistoryService)
-   * Registro correcto de las solicitudes en la base de datos.
-   * Registro asíncrono para no afectar la performance de las respuestas.
-   * Validación de la persistencia de la información consultada.
-
 ### Herramientas adicionales:
 * Mockito para simular dependencias externas y escenarios de error. 
-* Testcontainers (opcional): se podría integrar para tests de integración reales contra PostgreSQL si se quisiera escalar la cobertura.
 
 ---
 

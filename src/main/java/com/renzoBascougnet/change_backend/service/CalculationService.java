@@ -1,5 +1,7 @@
 package com.renzoBascougnet.change_backend.service;
 
+import com.renzoBascougnet.change_backend.dto.CalculateResponse;
+
 public interface CalculationService {
-    double calculateWithPercentage(double num1, double num2);
+    CalculateResponse calculateWithPercentage(double num1, double num2);
 }
