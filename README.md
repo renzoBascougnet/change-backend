@@ -78,12 +78,14 @@ Esto hará que Docker:
 GET /api/calculation?num1=10&num2=20
 ```
 * Ejemplo de respuesta (porcentaje 20%):
-```
-36.0
+```json
+{
+    "result": 36.0
+}
 ```
 (Ya que (10 + 20) × 1.2 = 36.0)
 * Ejemplo de respuesta en caso de error:
-```
+```json
 {
   "status": 404,
   "message": "No se pudo obtener el porcentaje ni hay valor cacheado.",
@@ -179,7 +181,7 @@ GET /api/request-history?page=0&size=10
 }
 ```
 * Ejemplo de respuesta en caso de error al consultar historial:
-```
+```json
 {
   "status": 500,
   "message": "Se produjo un error inesperado.",
