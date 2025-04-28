@@ -16,9 +16,10 @@ Servicio REST que permite realizar cálculos aplicando un porcentaje dinámico o
 ---
 
 ## Requisitos previos
-* Docker
-* Docker Compose
-* Java 21 (si se quiere correr sin contenedor)
+* Docker y Docker Compose instalados
+  * En Windows/Mac: se recomienda Docker Desktop
+   * En Linux: asegurarse de tener ambos instalados.
+* Java 21 (opcional, solo si se desea correr la aplicación fuera de Docker)
 
 ---
 
@@ -35,7 +36,7 @@ cd change-backend
    Desde la raíz del proyecto, ejecutar:
 
 ```bash
-docker-compose up --build
+docker-compose up
 ```
 Esto hará que Docker:
 * Construya la imagen de la API.
@@ -217,14 +218,10 @@ El proyecto cuenta con una cobertura de tests unitarios desarrollados con JUnit 
 ---
 
 ## Docker
-* Dockerfile: Para construir la imagen de la API.
-* docker-compose.yml: Para levantar conjuntamente:
-  * API en localhost:8080
-  * PostgreSQL en localhost:5432
-* Se puede reconstruir el proyecto ante cambios usando:
-```bash
-docker-compose up --build
-```
+* Dockerfile: Define cómo construir la imagen de la API.
+* docker-compose.yml: Orquesta el levantamiento conjunto de los servicios:
+  * API disponible en `localhost:8080`
+  * Base de datos PostgreSQL disponible en `localhost:5432`
 
 ---
 
