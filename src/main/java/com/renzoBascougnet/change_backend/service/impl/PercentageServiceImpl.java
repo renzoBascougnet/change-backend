@@ -18,9 +18,9 @@ public class PercentageServiceImpl implements PercentageService {
     private final CacheManager cacheManager;
 
     @Override
-    public Double getPercentage() {
+    public double getPercentage() {
         try {
-            Double percentage = percentageClient.getPercentage();
+            double percentage = percentageClient.getPercentage();
             Cache cache = cacheManager.getCache("percentage");
             if (cache != null) {
                 cache.put("latest", percentage);

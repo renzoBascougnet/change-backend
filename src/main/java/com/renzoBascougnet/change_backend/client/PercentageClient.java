@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface PercentageClient {
 
     @GetMapping("/external/percentage")
-    Double getPercentage();
+    double getPercentage();
 }
